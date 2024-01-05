@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import SearchBar from "./searchbar";
+import Country from "./country";
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -32,18 +33,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <input
-        type="text"
-        placeholder="Search Country..."
-        value={searchTerm}
-        onChange={handleSearch}
-      />
+      <SearchBar searchTerm={searchTerm} handleSearch={handleSearch} />
       <div className="country-list">
         {filteredCountries.map((country) => (
-          <div className="country-card" key={country.name.common}>
-            <img src={country.flags.png} alt={country.name.common} />
-            <p>{country.name.common}</p>
-          </div>
+          <Country key={country.name.common} country={country} />
         ))}
       </div>
     </div>
