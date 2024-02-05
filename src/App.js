@@ -10,7 +10,7 @@ const App = () => {
 
   useEffect(() => {
     fetchCountries();
-  }, []);
+  });
 
   const fetchCountries = async () => {
     try {

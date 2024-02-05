@@ -1,4 +1,4 @@
-// App.test.js
+
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
@@ -18,7 +18,6 @@ describe("Country App Tests", () => {
   });
 
   test("API Calls - should handle API call error", async () => {
-    // Simulate API call error
     jest
       .spyOn(global, "fetch")
       .mockImplementationOnce(() => Promise.reject("API Error"));
