@@ -1,3 +1,4 @@
+// App.js
 import React, { useState, useEffect } from "react";
 import SearchBar from "./searchbar";
 import Country from "./country";
@@ -36,7 +37,7 @@ const App = () => {
     <div className="App">
       <SearchBar searchTerm={searchTerm} handleSearch={handleSearch} />
       <div className="country-list">
-        {filteredCountries.slice(0, 3).map((country) => (
+        {filteredCountries.map((country) => (
           <Country key={country.name.common} country={country} />
         ))}
       </div>

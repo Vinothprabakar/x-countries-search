@@ -4,9 +4,10 @@ const SearchBar = ({ searchTerm, handleSearch }) => {
   return (
     <input
       type="text"
-      placeholder="Search Country..."
       value={searchTerm}
       onChange={handleSearch}
+      placeholder="Search for a country..."
+      className="search-bar"
     />
   );
 };
