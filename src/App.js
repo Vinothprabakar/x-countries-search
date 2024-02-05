@@ -1,48 +1,53 @@
-// App.js
 import React, { useState, useEffect } from "react";
-import SearchBar from "./searchbar";
-import Country from "./country";
+
 import "./App.css";
 
-const App = () => {
-  const [countries, setCountries] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+function App() {
+  const [data, setData] = useState([]);
+  const [text, setText] = useState("");
 
-  useEffect(() => {
-    fetchCountries();
-  });
-
-  const fetchCountries = async () => {
+  const getCountryData = async () => {
     try {
-      const response = await fetch("https://restcountries.com/v3.1/all");
-      if (!response.ok) {
-        throw new Error("Failed to fetch countries");
-      }
-      const data = await response.json();
-      setCountries(data);
+      const response = await fetch(`https://restcountries.com/v3.1/all`);
+      const resInJSON = await response.json();
+      setData(resInJSON);
     } catch (error) {
-      console.error("Error fetching countries:", error);
+      console.log(`Error fetching data: `, error);
     }
   };
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const filteredCountries = countries.filter((country) =>
-    country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    getCountryData();
+  }, []);
 
   return (
-    <div className="App">
-      <SearchBar searchTerm={searchTerm} handleSearch={handleSearch} />
-      <div className="country-list">
-        {filteredCountries.map((country) => (
-          <Country key={country.name.common} country={country} />
-        ))}
+    <>
+      <div className="input-box">
+        <input
+          type="text"
+          className="search-box"
+          placeholder="Search for Countries"
+          onChange={(e) => setText(e.target.value)}
+        />
       </div>
-    </div>
+      <div className="main__div">
+        {data
+          .filter((ctry) =>
+            !text.length
+              ? ctry
+              : ctry.name.common.toLowerCase().includes(text.toLowerCase())
+          )
+          .map((country) => {
+            return (
+              <div key={country.cca3} className="countryCard">
+                <img src={country.flags["svg"]} alt={country.flags["alt"]} />
+                <h2>{country.name.common}</h2>
+              </div>
+            );
+          })}
+      </div>
+    </>
   );
-};
+}
 
 export default App;
